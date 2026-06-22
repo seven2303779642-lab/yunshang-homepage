@@ -1,3 +1,10 @@
+# Yunshang Homepage
+
+## Work Log
+
+- Wireframe refinement: 1 hour
+- Built near-deliverable `Navbar` and `Footer` components, including responsive/mobile layouts: 3 hours
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

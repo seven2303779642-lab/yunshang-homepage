@@ -23,7 +23,7 @@ export default function OrderBanner() {
           </div>
         </div>
   
-        <div className="absolute bottom-0 left-0 h-28 w-full overflow-hidden bg-[#c83f3b]">
+        <div className="absolute bottom-0 left-0 h-28 w-full overflow-hidden bg-[#000000]">
           <div className="flex h-full items-end opacity-90">
             {Array.from({ length: 34 }).map((_, index) => (
               <div

@@ -1,13 +1,63 @@
 @import "tailwindcss";
 
-:root {
-  --color-red: #c83f3b;
-  --color-red-dark: #a9312f;
-  --color-cream: #fff4ec;
-  --color-white: #ffffff;
-  --color-text: #222222;
+/* Extracted global design tokens from post-7.css.
+   Kept: colors, typography scale, responsive title sizes, fonts, container width.
+   Removed: Elementor-only selectors such as .elementor-kit-7, .elementor-section, .e-con, .site-header. */
 
-  --container-width: 1200px;
+/* Source site fonts. For production, prefer downloading licensed fonts into /public/fonts
+   and replacing these remote URLs with local paths. */
+@font-face {
+  font-family: "XiQueZhaoPaiTi";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://yunshang.ca/wp-content/uploads/å–œé¹Šæ‹›ç‰Œä½“-REGULAR.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Universal Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://yunshang.ca/wp-content/uploads/Universal-Serif.ttf") format("truetype");
+}
+
+:root {
+  /* Brand colors from Yunshang Elementor kit */
+  --color-red: #c1413d;
+  --color-red-dark: #a9312f;
+  --color-red-deep: #c3423e;
+  --color-cream: #fff5f0;
+  --color-cream-light: #fef7f3;
+  --color-cream-soft: #feefea;
+  --color-white: #ffffff;
+  --color-black: #050607;
+  --color-text: #050607;
+  --color-text-light: #fef7f3;
+  --color-gold: #ffc04d;
+
+  /* Typography */
+  --font-display: "XiQueZhaoPaiTi", "Noto Sans SC", sans-serif;
+  --font-body: "Noto Sans SC", "Noto Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: "Universal Serif", Georgia, serif;
+
+  --font-size-h1: 66px;
+  --font-size-h2: 48px;
+  --font-size-h3: 42px;
+  --font-size-h4: 36px;
+  --font-size-h5: 32px;
+  --font-size-h6: 26px;
+  --font-size-body: 16px;
+  --font-size-body-large: 22px;
+  --font-size-button: 26px;
+
+  --line-height-heading: 1.1;
+  --line-height-body: 1.8;
+  --line-height-body-tight: 1.5;
+  --line-height-body-large: 1.6;
+
+  /* Layout */
+  --container-width: 1440px;
   --section-padding: 96px;
 }
 
@@ -23,6 +73,9 @@ body {
   margin: 0;
   background: var(--color-cream);
   color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
 }
 
 a {
@@ -30,8 +83,64 @@ a {
   text-decoration: none;
 }
 
-button {
+a:hover {
+  color: var(--color-red);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: var(--line-height-heading);
+}
+
+h1 {
+  color: var(--color-cream-light);
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  color: var(--color-red);
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  color: var(--color-cream-light);
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  color: var(--color-cream-light);
+  font-size: var(--font-size-h4);
+}
+
+h5 {
+  color: var(--color-red);
+  font-size: var(--font-size-h5);
+}
+
+h6 {
+  color: var(--color-red);
+  font-size: var(--font-size-h6);
+}
+
+p {
+  margin: 0;
+}
+
+button,
+input[type="button"],
+input[type="submit"] {
   font: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 .container {
@@ -47,9 +156,19 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: var(--font-size-button);
+  font-weight: 400;
+  line-height: var(--line-height-heading);
+  color: var(--color-cream-light);
   cursor: pointer;
   border: none;
+  background: transparent;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  color: var(--color-red);
   background: transparent;
 }
 
@@ -58,10 +177,11 @@ button {
   color: var(--color-white);
   padding: 12px 40px;
 }
+
 .repeating-grid {
   background-image:
-    linear-gradient(90deg, rgba(200, 63, 59, 0.18) 50%, transparent 50%),
-    linear-gradient(rgba(200, 63, 59, 0.18) 50%, transparent 50%);
+    linear-gradient(90deg, rgba(193, 65, 61, 0.18) 50%, transparent 50%),
+    linear-gradient(rgba(193, 65, 61, 0.18) 50%, transparent 50%);
   background-size: 120px 120px;
 }
 
@@ -69,7 +189,7 @@ button {
   background-image: repeating-radial-gradient(
     circle at 50% 100%,
     transparent 0 28px,
-    #c83f3b 29px 30px
+    var(--color-red) 29px 30px
   );
   background-size: 180px 90px;
 }
@@ -77,4 +197,70 @@ button {
 .vertical-writing {
   writing-mode: vertical-rl;
   text-orientation: upright;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.text-red {
+  color: var(--color-red);
+}
+
+.text-light {
+  color: var(--color-text-light);
+}
+
+.bg-red {
+  background-color: var(--color-red);
+}
+
+.bg-cream {
+  background-color: var(--color-cream);
+}
+
+.bg-cream-light {
+  background-color: var(--color-cream-light);
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --font-size-h1: 54px;
+    --font-size-h2: 42px;
+    --font-size-h3: 34px;
+    --font-size-h4: 30px;
+    --font-size-h5: 28px;
+    --font-size-h6: 24px;
+    --font-size-body: 16px;
+    --font-size-body-large: 20px;
+    --font-size-button: 22px;
+    --container-width: 1024px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --font-size-h1: 48px;
+    --font-size-h2: 38px;
+    --font-size-h3: 32px;
+    --font-size-h4: 28px;
+    --font-size-h5: 24px;
+    --font-size-h6: 22px;
+    --font-size-body: 15px;
+    --font-size-body-large: 18px;
+    --font-size-button: 20px;
+    --container-width: 767px;
+  }
+
+  .container {
+    width: min(var(--container-width), calc(100% - 32px));
+  }
+
+  .section {
+    padding: 72px 0;
+  }
 }

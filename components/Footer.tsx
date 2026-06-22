@@ -1,113 +1,189 @@
+import Image from "next/image";
+import Link from "next/link";
+
+const footerLinksLeft = [
+  { href: "/about", label: "关于云尚" },
+  { href: "/events", label: "活动" },
+];
+
+const footerLinksRight = [
+  { href: "/stores", label: "门店" },
+  { href: "/menu", label: "菜单" },
+  { href: "/order", label: "线上点单" },
+];
+
+const socialLinks = [
+  {
+    href: "#",
+    label: "Facebook",
+    icon: "/images/logos/facebook.svg",
+  },
+  {
+    href: "#",
+    label: "Instagram",
+    icon: "/images/logos/ins.svg",
+  },
+  {
+    href: "#",
+    label: "Redbook",
+    icon: "/images/logos/redbook.svg",
+  },
+];
+
+function FooterLink({ href, label }: { href: string; label: string }) {
+  return (
+    <Link
+      href={href}
+      className="
+        relative isolate px-4 py-1 text-[18px] font-normal leading-none text-white
+        transition-colors duration-300
+        before:pointer-events-none before:absolute before:inset-x-[-8px] before:inset-y-[-4px]
+        before:-z-10 before:scale-x-50 before:scale-y-75 before:bg-white before:opacity-0
+        before:transition-all before:duration-300 before:ease-out
+        hover:text-[var(--color-red)] hover:before:scale-x-100 hover:before:scale-y-100 hover:before:opacity-100
+      "
+    >
+      {label}
+    </Link>
+  );
+}
+
+function FooterLinkColumn({
+  links,
+}: {
+  links: Array<{ href: string; label: string }>;
+}) {
+  return (
+    <div
+      className="flex flex-col items-center gap-7"
+      style={{ fontFamily: "var(--font-display)" }}
+    >
+      <Image
+        src="/images/云-白字.svg"
+        alt=""
+        width={34}
+        height={34}
+        className="h-[22px] w-[22px]"
+        aria-hidden="true"
+      />
+
+      {links.map((item) => (
+        <FooterLink key={item.href} href={item.href} label={item.label} />
+      ))}
+    </div>
+  );
+}
+
 export default function Footer() {
-    return (
-      <footer className="relative mt-24 overflow-hidden bg-[#fff4ec] text-white">
-        {/* Top decorative area */}
-        <div className="relative z-10 -mt-16 h-32 bg-[#fff4ec]">
-          <div className="absolute bottom-0 left-0 h-20 w-full overflow-hidden">
-            <div className="flex h-full items-end opacity-90">
-              {Array.from({ length: 28 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="h-20 w-24 shrink-0 rounded-t-full border-[3px] border-[#c83f3b] border-b-0"
-                />
+  return (
+    <footer className="relative overflow-visible bg-[var(--color-red)]">
+      {/* Floating top decoration: sits above footer and covers the previous section */}
+      <div
+        className="pointer-events-none absolute left-0 top-[-80px] z-20 h-[80px] w-full bg-repeat-x"
+        style={{
+          backgroundImage: "url('/images/footer/footer-bolang-up.png')",
+          backgroundPosition: "center top",
+          backgroundSize: "auto 100%",
+        }}
+        aria-hidden="true"
+      >
+        <Image
+          src="/images/footer/footer-icons.svg"
+          alt=""
+          width={420}
+          height={96}
+          className="absolute left-1/2 top-[-46px] z-30 h-[86px] w-auto -translate-x-1/2"
+          aria-hidden="true"
+        />
+      </div>
+
+      <div className="relative min-h-[350px] overflow-hidden bg-[var(--color-red)] px-10 py-[60px] text-white max-[767px]:px-8">
+        <div
+          className="pointer-events-none absolute bottom-0 left-0 z-0 h-[140px] w-full bg-repeat-x"
+          style={{
+            backgroundImage: "url('/images/footer/footer-bolang-bottom.png')",
+            backgroundPosition: "center bottom",
+            backgroundSize: "auto 100%",
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 mx-auto flex max-w-[1200px] items-start justify-between gap-16 max-[767px]:flex-col max-[767px]:items-center max-[767px]:justify-start max-[767px]:gap-9">
+          <div className="flex w-[170px] flex-col items-center max-[767px]:w-[170px] max-[767px]:flex-col-reverse max-[767px]:gap-7">
+            <Link href="/" aria-label="Go to home page">
+              <Image
+                src="/images/logos/云尚-2.png"
+                alt="Yunshang Rice Noodle"
+                width={260}
+                height={120}
+                className="h-auto w-full max-w-[170px]"
+              />
+            </Link>
+
+            <div className="mt-6 flex w-full items-center justify-between max-[767px]:mt-0 max-[767px]:w-[170px]">
+              {socialLinks.map((item) => (
+                <Link key={item.label} href={item.href} aria-label={item.label}>
+                  <Image
+                    src={item.icon}
+                    alt=""
+                    width={28}
+                    height={28}
+                    className="h-[22px] w-[22px]"
+                    aria-hidden="true"
+                  />
+                </Link>
               ))}
             </div>
           </div>
-  
-          <div className="absolute left-1/2 top-4 flex -translate-x-1/2 gap-6">
-            {["下山小时", "新鲜熬煮", "不添加味精", "米线无限量"].map(
-              (item) => (
-                <div
-                  key={item}
-                  className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-[#c83f3b] bg-[#c83f3b] text-center text-xs font-bold leading-tight text-white"
-                >
-                  {item}
-                </div>
-              )
-            )}
+
+          <div className="flex items-start justify-center gap-24 max-[767px]:w-full max-[767px]:gap-20">
+            <FooterLinkColumn links={footerLinksLeft} />
+            <FooterLinkColumn links={footerLinksRight} />
+          </div>
+
+          <div
+            className="flex flex-col items-center"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            <div className="mb-4 text-[16px] font-normal leading-none">微信小客服</div>
+            <Image
+              src="/images/footer/service-barcode.png"
+              alt="WeChat customer service QR code"
+              width={140}
+              height={140}
+              className="h-[120px] w-[120px]"
+            />
           </div>
         </div>
-  
-        {/* Main red footer */}
-        <div className="relative bg-[#c83f3b] px-20 py-20">
-          {/* bottom wave decoration inside red block */}
-          <div className="pointer-events-none absolute bottom-0 left-0 h-28 w-full overflow-hidden opacity-35">
-            <div className="flex h-full items-end">
-              {Array.from({ length: 32 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="h-24 w-28 shrink-0 rounded-t-full border-2 border-white border-b-0"
-                />
-              ))}
-            </div>
-          </div>
-  
-          <div className="relative z-10 mx-auto grid max-w-[1200px] grid-cols-4 items-start gap-16">
-            {/* Logo block */}
-            <div>
-              <div className="mb-6">
-                <div className="text-4xl font-extrabold leading-tight">
-                  云尚
-                  <br />
-                  米线
-                </div>
-                <div className="mt-2 text-xs font-bold">
-                  YUNSHANG RICE NOODLE
-                </div>
-              </div>
-  
-              <div className="flex gap-8 text-2xl">
-                <span>ⓕ</span>
-                <span>◎</span>
-                <span className="rounded bg-white px-1 text-sm font-bold text-[#c83f3b]">
-                  小红书
-                </span>
-              </div>
-            </div>
-  
-            {/* Link column 1 */}
-            <div className="flex flex-col items-center gap-7 text-xl font-bold">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white">
-                云
-              </div>
-              <a>关于云尚</a>
-              <a>活动</a>
-            </div>
-  
-            {/* Link column 2 */}
-            <div className="flex flex-col items-center gap-7 text-xl font-bold">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white">
-                云
-              </div>
-              <a>门店</a>
-              <a className="bg-[#fff4ec] px-10 py-2 text-[#c83f3b]">菜单</a>
-              <a>线上点单</a>
-            </div>
-  
-            {/* QR block */}
-            <div className="flex flex-col items-center">
-              <div className="mb-4 text-xl font-bold">微信小客服</div>
-              <div className="flex h-28 w-28 items-center justify-center rounded-md bg-white text-xs font-bold text-[#c83f3b]">
-                QR CODE
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        {/* Bottom copyright */}
-        <div className="relative flex h-16 items-center justify-center bg-[#fff4ec] text-[#c83f3b]">
-          <div className="absolute left-40 flex h-7 w-7 items-center justify-center rounded-full border-2 border-[#c83f3b] font-bold">
-            云
-          </div>
-  
-          <p className="text-lg font-extrabold">
-            © 2023 YUNSHANG RICE NOODLE. ALL RIGHTS RESERVED.
-          </p>
-  
-          <div className="absolute right-40 flex h-7 w-7 items-center justify-center rounded-full border-2 border-[#c83f3b] font-bold">
-            云
-          </div>
-        </div>
-      </footer>
-    );
-  }
+      </div>
+
+      <div className="relative flex h-[60px] items-center justify-center bg-[var(--color-cream)] px-10 text-[var(--color-red)]">
+        <Image
+          src="/images/云-红字.svg"
+          alt=""
+          width={28}
+          height={28}
+          className="absolute left-[13%] h-7 w-7 max-[767px]:left-6"
+          aria-hidden="true"
+        />
+
+        <p
+          className="w-[706px] max-w-full text-center text-[17px] font-normal leading-[17px] tracking-normal"
+          style={{ fontFamily: "var(--font-serif)" }}
+        >
+          <span>© 2023 YUNSHANG RICE NOODLE.</span>
+          <span className="max-[767px]:block"> ALL RIGHTS RESERVED.</span>
+        </p>
+
+        <Image
+          src="/images/云-红字.svg"
+          alt=""
+          width={28}
+          height={28}
+          className="absolute right-[13%] h-7 w-7 max-[767px]:right-6"
+          aria-hidden="true"
+        />
+      </div>
+    </footer>
+  );
+}
