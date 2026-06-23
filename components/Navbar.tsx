@@ -116,29 +116,22 @@ export default function Navbar() {
         href="/order"
         onClick={() => setMenuOpen(false)}
         className={cn(
-          "group relative block h-[46px] min-w-[168px] bg-white",
+          "group relative block h-[46px] min-w-[168px] bg-[var(--color-red)]",
           className,
         )}
         style={{ fontFamily: "var(--font-display)" }}
       >
         <div
           aria-hidden="true"
-          className="
-            absolute inset-[4px]
-            bg-[var(--color-red)]
-          "
+          className="absolute inset-[3px] bg-white"
         />
 
         <div
-          className="
-            absolute inset-[7px]
-            z-20 flex items-center justify-center
-            bg-transparent
-            text-lg font-bold leading-none text-white
-            transition-colors duration-300
-            group-hover:bg-white group-hover:text-[var(--color-red)]
-          "
-        >
+          aria-hidden="true"
+          className="absolute inset-[6px] bg-[var(--color-red)]"
+        />
+
+        <div className="absolute inset-[9px] z-20 flex items-center justify-center bg-transparent text-lg font-bold leading-none text-white transition-colors duration-300 group-hover:bg-white group-hover:text-[var(--color-red)]">
           {currentCopy.order}
         </div>
 
@@ -146,18 +139,12 @@ export default function Navbar() {
           aria-hidden="true"
           viewBox="0 0 168 46"
           preserveAspectRatio="none"
-          className="
-            pointer-events-none absolute inset-0 z-30
-            h-full w-full overflow-visible
-          "
+          className="pointer-events-none absolute inset-0 z-30 h-full w-full overflow-visible"
         >
           <g
             stroke="var(--color-red)"
             strokeLinecap="butt"
-            className="
-              transition-all duration-300
-              [stroke-width:1] group-hover:[stroke-width:2]
-            "
+            className="transition-all duration-300 [stroke-width:1] group-hover:[stroke-width:2]"
           >
             <line x1="-4" y1="-4" x2="6" y2="6" />
             <line x1="172" y1="-4" x2="162" y2="6" />
@@ -168,6 +155,7 @@ export default function Navbar() {
       </Link>
     );
   }
+
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-[var(--color-red)]">
