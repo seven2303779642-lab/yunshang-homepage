@@ -1,13 +1,43 @@
 "use client";
 
 import BrandButton from "@/components/BrandButton";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const VIDEO_EMBED_URL =
   "https://www.youtube.com/embed/H_a0OlznLLs?autoplay=1&rel=0&modestbranding=1";
 
 export default function AboutIntro() {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [isDesktopCloudVisible, setIsDesktopCloudVisible] = useState(false);
+  const [isMobileCloudVisible, setIsMobileCloudVisible] = useState(false);
+  const desktopCloudRef = useRef<HTMLImageElement>(null);
+  const mobileCloudRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const cloudImages = [
+      { ref: desktopCloudRef, onVisible: () => setIsDesktopCloudVisible(true) },
+      { ref: mobileCloudRef, onVisible: () => setIsMobileCloudVisible(true) },
+    ] as const;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const match = cloudImages.find(({ ref }) => ref.current === entry.target);
+          match?.onVisible();
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.15 },
+    );
+
+    cloudImages.forEach(({ ref }) => {
+      if (ref.current) observer.observe(ref.current);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!isVideoOpen) return;
@@ -31,14 +61,14 @@ export default function AboutIntro() {
 
   return (
     <section className="relative grid overflow-hidden bg-[var(--color-red)] text-white min-[1025px]:min-h-[560px] min-[1025px]:grid-cols-2">
-      <div className="relative z-20 flex flex-col items-center justify-center px-[50px] py-[68px] text-center min-[1025px]:items-start min-[1025px]:justify-start min-[1025px]:p-[100px] min-[1025px]:text-left">
+      <div className="relative z-20 flex flex-col items-center justify-center px-[15px] py-[60px] text-center min-[768px]:px-[50px] min-[768px]:py-[68px] min-[1025px]:items-start min-[1025px]:justify-start min-[1025px]:p-[100px] min-[1025px]:text-left">
         <h2 className="type-display-title !text-white">
           一碗有温度的米线，
           <br />
           从匠心开始
         </h2>
 
-        <p className="type-body-copy mt-8 max-w-[920px] text-white min-[1025px]:max-w-[476px]">
+        <p className="type-body-copy mt-[20px] max-w-[920px] text-white min-[1025px]:max-w-[476px]">
           云尚米线，传承云南百年米线文化，以滚烫鲜骨浓汤激发食材本味，
           醇厚鲜香，一口暖心！严选央企华润五丰米线，100%纯大米研磨，
           0胶添加，爽滑Q弹，吸汁入味。高汤精选优质鲜骨，慢熬12小时以上，
@@ -59,14 +89,17 @@ export default function AboutIntro() {
       </div>
 
       <img
+        ref={desktopCloudRef}
         src="/images/云.svg"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute left-[calc(50%+115px)] top-[185px] z-30 hidden h-[286px] w-[434px] -translate-x-1/2 select-none object-contain min-[1025px]:block"
+        className={`pointer-events-none absolute left-[calc(50%+115px)] top-[105px] z-30 hidden h-[286px] w-[434px] -translate-x-1/2 select-none object-contain transition-opacity duration-700 ease-in-out min-[1025px]:block ${
+          isDesktopCloudVisible ? "opacity-100" : "opacity-0"
+        }`}
         draggable={false}
       />
 
-      <div className="relative h-[488px] overflow-hidden bg-black min-[1025px]:h-auto min-[1025px]:min-h-[560px]">
+      <div className="relative h-[300px] overflow-hidden bg-black min-[768px]:h-[488px] min-[1025px]:h-auto min-[1025px]:min-h-[560px]">
         <img
           src="/images/骨汤.webp"
           alt="云尚米线骨汤熬制画面"
@@ -76,10 +109,13 @@ export default function AboutIntro() {
         <div className="absolute inset-0 bg-black/10" />
 
         <img
+          ref={mobileCloudRef}
           src="/images/云.svg"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute left-[-64px] top-[210px] z-20 block w-[235px] select-none min-[1025px]:hidden"
+          className={`pointer-events-none absolute left-[-64px] top-[130px] z-20 hidden w-[235px] select-none transition-opacity duration-700 ease-in-out min-[768px]:block min-[1025px]:hidden ${
+            isMobileCloudVisible ? "opacity-100" : "opacity-0"
+          }`}
           draggable={false}
         />
 
@@ -92,7 +128,7 @@ export default function AboutIntro() {
           <svg
             aria-hidden="true"
             viewBox="0 0 48 48"
-            className="ml-[3px] h-[25px] w-[25px] fill-current"
+            className="ml-[4px] h-[34px] w-[34px] fill-current"
           >
             <path d="M18.2 14.6C17.1 14 16 14.8 16 16.1v15.8c0 1.3 1.4 2.1 2.5 1.4l12.8-7.9c1-.6 1-2.1 0-2.7L18.2 14.6Z" />
           </svg>

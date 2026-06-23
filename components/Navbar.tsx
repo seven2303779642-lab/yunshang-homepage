@@ -159,7 +159,9 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center">
-            <BrandButton href="/order">{currentCopy.order}</BrandButton>
+            <BrandButton href="/order" variant="navbar">
+              {currentCopy.order}
+            </BrandButton>
           </div>
         </div>
 
@@ -229,6 +231,7 @@ export default function Navbar() {
 
           <BrandButton
             href="/order"
+            variant="navbar"
             className="mt-2"
             onClick={() => setMenuOpen(false)}
           >

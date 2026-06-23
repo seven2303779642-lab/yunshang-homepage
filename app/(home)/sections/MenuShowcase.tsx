@@ -32,9 +32,9 @@ type MotionTransforms = {
 };
 
 const DESKTOP_INITIAL: MotionTransforms = {
-  backgroundX: -400,
+  backgroundX: 0,
   leftY: 0,
-  rightY: 400,
+  rightY: 520,
 };
 
 function clamp(value: number, min: number, max: number) {
@@ -65,28 +65,28 @@ function getMotionTransforms(
     return {
       backgroundX: 0,
       leftY: 0,
-      rightY: 400,
+      rightY: 520,
     };
   }
 
-  const backgroundProgress = rangeProgress(rawProgress, 0.25, 0.9);
-  const backgroundX = lerp(-400, -525, backgroundProgress);
+  const backgroundProgress = rangeProgress(rawProgress, 0.18, 0.9);
+  const backgroundX = lerp(0, -160, backgroundProgress);
 
   if (viewportWidth <= 1024) {
     return {
       backgroundX,
       leftY: 0,
-      rightY: 400,
+      rightY: 520,
     };
   }
 
-  const leftProgress = rangeProgress(rawProgress, 0.12, 0.95);
-  const rightProgress = rangeProgress(rawProgress, 0.05, 0.85);
+  const leftProgress = rangeProgress(rawProgress, 0.08, 0.92);
+  const rightProgress = rangeProgress(rawProgress, 0.08, 0.92);
 
   return {
     backgroundX,
-    leftY: lerp(0, 400, leftProgress),
-    rightY: lerp(400, -160, rightProgress),
+    leftY: lerp(0, 520, leftProgress),
+    rightY: lerp(520, 0, rightProgress),
   };
 }
 
@@ -103,15 +103,18 @@ export default function MenuShowcase() {
       const section = sectionRef.current;
       if (!section) return;
 
+      const viewportWidth = window.innerWidth;
+
       const transforms = getMotionTransforms(
         section.getBoundingClientRect(),
         section.offsetHeight,
         window.innerHeight,
-        window.innerWidth,
+        viewportWidth,
       );
 
       if (backgroundRef.current) {
-        backgroundRef.current.style.transform = `translate3d(${transforms.backgroundX}px, 0, 0)`;
+        const backgroundY = viewportWidth < 768 ? "-50%" : "-30%";
+        backgroundRef.current.style.transform = `translate3d(calc(-50% + ${transforms.backgroundX}px), ${backgroundY}, 0)`;
       }
 
       if (leftLabelRef.current) {
@@ -142,16 +145,16 @@ export default function MenuShowcase() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#fff4ec] px-6 py-20 min-[1025px]:px-12 min-[1025px]:py-28"
+      className="relative overflow-hidden bg-[#fff4ec] px-6 pt-20 pb-28 min-[1025px]:px-12 min-[1025px]:pt-28 min-[1025px]:pb-36"
     >
       <img
         ref={backgroundRef}
         src="/images/menushowcase/背景云.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-[-10%] z-0 h-full w-[120%] max-w-none select-none object-cover will-change-transform"
+        className="pointer-events-none absolute left-1/2 top-full z-0 w-[280vw] max-w-none select-none will-change-transform min-[768px]:w-[220vw]"
         style={{
-          transform: `translate3d(${DESKTOP_INITIAL.backgroundX}px, 0, 0)`,
+          transform: `translate3d(calc(-50% + ${DESKTOP_INITIAL.backgroundX}px), -50%, 0)`,
         }}
         draggable={false}
       />
@@ -160,7 +163,7 @@ export default function MenuShowcase() {
         ref={leftLabelRef}
         src="/images/menushowcase/一碗好米线.png"
         alt="一碗好米线"
-        className="pointer-events-none absolute left-7 top-24 z-10 hidden w-[116px] select-none will-change-transform min-[1025px]:block"
+        className="pointer-events-none absolute left-7 top-28 z-10 hidden w-[116px] select-none will-change-transform min-[1025px]:block"
         style={{ transform: `translate3d(0, ${DESKTOP_INITIAL.leftY}px, 0)` }}
         draggable={false}
       />
@@ -169,7 +172,7 @@ export default function MenuShowcase() {
         ref={rightLabelRef}
         src="/images/menushowcase/半碗都是料.png"
         alt="半碗都是料"
-        className="pointer-events-none absolute bottom-20 right-7 z-10 hidden w-[116px] select-none will-change-transform min-[1025px]:block"
+        className="pointer-events-none absolute right-7 top-28 z-10 hidden w-[116px] select-none will-change-transform min-[1025px]:block"
         style={{ transform: `translate3d(0, ${DESKTOP_INITIAL.rightY}px, 0)` }}
         draggable={false}
       />
@@ -197,7 +200,7 @@ export default function MenuShowcase() {
                 />
               </div>
 
-              <div className="mt-7 flex items-center justify-center gap-3 leading-none">
+              <div className="mt-2 flex items-center justify-center gap-3 leading-none">
                 <img
                   src="/images/云-红字.svg"
                   alt=""
@@ -215,7 +218,7 @@ export default function MenuShowcase() {
                 />
               </div>
 
-              <p className="type-body-copy mx-auto mt-5 max-w-[360px] text-[#202020]">
+              <p className="type-body-copy mx-auto mt-4 max-w-[360px] text-[#202020]">
                 {item.text}
               </p>
             </article>

@@ -1,8 +1,8 @@
-import BrandButton from "@/components/BrandButton";
+import StoresButton from "@/components/StoresButton";
 
 export default function StoreBanner() {
   return (
-    <section className="relative h-[530px] overflow-hidden bg-black min-[1025px]:h-[520px]">
+    <section className="relative h-[430px] overflow-hidden bg-black min-[768px]:h-[530px] min-[1025px]:h-[520px]">
       <img
         src="/images/门店.jpg"
         alt="云尚米线门店环境"
@@ -17,12 +17,12 @@ export default function StoreBanner() {
           全加拿大18家分店
         </h2>
 
-        <p className="type-body-copy-emphasis mt-6 text-white">
+        <p className="type-body-copy-emphasis mt-[20px] text-white">
           寻找离您最近的云尚米线分店
         </p>
 
         <div className="relative mt-7 inline-flex items-center justify-center">
-          <BrandButton href="/stores">查看附近门店</BrandButton>
+          <StoresButton />
         </div>
       </div>
     </section>

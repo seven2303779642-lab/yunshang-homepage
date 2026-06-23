@@ -10,6 +10,7 @@ type BrandButtonProps = {
   children: ReactNode;
   className?: string;
   onClick?: () => void;
+  variant?: "section" | "navbar";
 };
 
 export default function BrandButton({
@@ -17,7 +18,13 @@ export default function BrandButton({
   children,
   className,
   onClick,
+  variant = "section",
 }: BrandButtonProps) {
+  const labelClass =
+    variant === "navbar"
+      ? "text-[20px] font-normal leading-none min-[768px]:text-lg min-[768px]:font-bold"
+      : "text-[20px] font-normal leading-none min-[768px]:text-[26px]";
+
   return (
     <Link
       href={href}
@@ -35,7 +42,12 @@ export default function BrandButton({
         className="absolute inset-[6px] bg-[var(--color-red)]"
       />
 
-      <div className="absolute inset-[9px] z-20 flex items-center justify-center bg-transparent text-lg font-bold leading-none text-white transition-colors duration-300 group-hover:bg-white group-hover:text-[var(--color-red)]">
+      <div
+        className={cn(
+          "absolute inset-[9px] z-20 flex items-center justify-center bg-transparent text-white transition-colors duration-300 group-hover:bg-white group-hover:text-[var(--color-red)]",
+          labelClass,
+        )}
+      >
         {children}
       </div>
 
