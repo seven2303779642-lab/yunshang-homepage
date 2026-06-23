@@ -3,7 +3,12 @@
 ## Work Log
 
 - Wireframe refinement: 1 hour
-- Built near-deliverable `Navbar` and `Footer` components, including responsive/mobile layouts: 3 hours
+- Built near-deliverable `Navbar` and `Footer` components, including responsive/mobile layouts: 4 hours
+- Homepage section implementation and visual polish: 7 hours
+  - Implemented and refined the main homepage sections, including `HeroSlider`, `AboutIntro`, `FeatureCards`, `StoreBanner`, `MenuShowcase`, and `OrderBanner`.
+  - Updated typography, reusable button styling, responsive behavior, mobile layout fixes, spacing, image positioning, and section-level visual details.
+  - Remaining issues: a few minor visual polish items and English-version asset/link issues.
+
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
