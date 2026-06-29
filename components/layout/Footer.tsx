@@ -12,15 +12,15 @@ import { usePathname } from "next/navigation";
 const SOCIAL_ICONS = [
   {
     href: "#",
-    icon: "/images/logos/facebook.svg",
+    icon: "/images/common/logos/facebook.svg",
   },
   {
     href: "#",
-    icon: "/images/logos/ins.svg",
+    icon: "/images/common/logos/ins.svg",
   },
   {
     href: "#",
-    icon: "/images/logos/redbook.svg",
+    icon: "/images/common/logos/redbook.svg",
   },
 ];
 
@@ -50,7 +50,7 @@ function FooterLinkColumn({
   return (
     <div className="flex flex-col items-center gap-7">
       <Image
-        src="/images/云-白字.svg"
+        src="/images/home/decorative/cloud-white-text.svg"
         alt=""
         width={34}
         height={34}
@@ -76,14 +76,14 @@ export default function Footer() {
       <div
         className="pointer-events-none absolute left-0 top-[-80px] z-20 h-[80px] w-full bg-repeat-x"
         style={{
-          backgroundImage: "url('/images/footer/footer-bolang-up.png')",
+          backgroundImage: "url('/images/common/footer/footer-bolang-up.png')",
           backgroundPosition: "center top",
           backgroundSize: "auto 100%",
         }}
         aria-hidden="true"
       >
         <Image
-          src="/images/footer/footer-icons.svg"
+          src="/images/common/footer/footer-icons.svg"
           alt=""
           width={420}
           height={96}
@@ -96,7 +96,7 @@ export default function Footer() {
         <div
           className="pointer-events-none absolute bottom-0 left-0 z-0 h-[140px] w-full bg-repeat-x"
           style={{
-            backgroundImage: "url('/images/footer/footer-bolang-bottom.png')",
+            backgroundImage: "url('/images/common/footer/footer-bolang-bottom.png')",
             backgroundPosition: "center bottom",
             backgroundSize: "auto 100%",
           }}
@@ -107,7 +107,7 @@ export default function Footer() {
           <div className="flex w-[170px] flex-col items-center max-[767px]:w-[170px] max-[767px]:flex-col-reverse max-[767px]:gap-7">
             <Link href={footer.homeHref} aria-label={footer.homeAriaLabel}>
               <Image
-                src="/images/logos/云尚-2.png"
+                src="/images/common/logos/云尚-2.png"
                 alt={footer.logoAlt}
                 width={260}
                 height={120}
@@ -145,7 +145,7 @@ export default function Footer() {
               {footer.wechatSupport}
             </div>
             <Image
-              src="/images/footer/service-barcode.png"
+              src="/images/common/footer/service-barcode.png"
               alt={footer.wechatQrAlt}
               width={140}
               height={140}
@@ -157,7 +157,7 @@ export default function Footer() {
 
       <div className="relative flex h-[60px] items-center justify-center bg-[var(--color-cream)] px-10 text-[var(--color-red)]">
         <Image
-          src="/images/云-红字.svg"
+          src="/images/home/decorative/cloud-red-text.svg"
           alt=""
           width={28}
           height={28}
@@ -171,7 +171,7 @@ export default function Footer() {
         </p>
 
         <Image
-          src="/images/云-红字.svg"
+          src="/images/home/decorative/cloud-red-text.svg"
           alt=""
           width={28}
           height={28}

@@ -9,7 +9,7 @@ export default function StoreBanner({ content }: StoreBannerProps) {
   return (
     <section className="relative h-[430px] overflow-hidden bg-black min-[768px]:h-[530px] min-[1025px]:h-[520px]">
       <img
-        src="/images/门店.jpg"
+        src="/images/home/store-banner/stores.jpg"
         alt={content.imageAlt}
         className="absolute inset-0 h-full w-full object-cover object-center"
         draggable={false}

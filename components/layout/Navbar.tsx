@@ -100,7 +100,7 @@ export default function Navbar() {
           onClick={() => setMenuOpen(false)}
         >
           <Image
-            src="/images/logos/云尚-1.png"
+            src="/images/common/logos/云尚-1.png"
             alt={nav.logoAlt}
             width={260}
             height={80}

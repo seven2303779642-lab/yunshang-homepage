@@ -6,16 +6,16 @@ import { useEffect, useRef } from "react";
 
 const MENU_IMAGES = [
   {
-    tag: "/images/menushowcase/经典.png",
-    image: "/images/menushowcase/过桥米线.png",
+    tag: "/images/home/menu-showcase/经典.png",
+    image: "/images/home/menu-showcase/过桥米线.png",
   },
   {
-    tag: "/images/menushowcase/人气.png",
-    image: "/images/menushowcase/特色米线.png",
+    tag: "/images/home/menu-showcase/人气.png",
+    image: "/images/home/menu-showcase/特色米线.png",
   },
   {
-    tag: "/images/menushowcase/必点.png",
-    image: "/images/menushowcase/凉菜小吃.png",
+    tag: "/images/home/menu-showcase/必点.png",
+    image: "/images/home/menu-showcase/凉菜小吃.png",
   },
 ];
 
@@ -147,7 +147,7 @@ export default function MenuShowcase({ content }: MenuShowcaseProps) {
     >
       <img
         ref={backgroundRef}
-        src="/images/menushowcase/背景云.png"
+        src="/images/home/menu-showcase/背景云.png"
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-full z-0 w-[280vw] max-w-none select-none will-change-transform min-[768px]:w-[220vw]"
@@ -159,7 +159,7 @@ export default function MenuShowcase({ content }: MenuShowcaseProps) {
 
       <img
         ref={leftLabelRef}
-        src="/images/menushowcase/一碗好米线.png"
+        src="/images/home/menu-showcase/一碗好米线.png"
         alt={content.leftLabelAlt}
         className="pointer-events-none absolute left-7 top-28 z-10 hidden w-[116px] select-none will-change-transform min-[1025px]:block"
         style={{ transform: `translate3d(0, ${DESKTOP_INITIAL.leftY}px, 0)` }}
@@ -168,7 +168,7 @@ export default function MenuShowcase({ content }: MenuShowcaseProps) {
 
       <img
         ref={rightLabelRef}
-        src="/images/menushowcase/半碗都是料.png"
+        src="/images/home/menu-showcase/半碗都是料.png"
         alt={content.rightLabelAlt}
         className="pointer-events-none absolute right-7 top-28 z-10 hidden w-[116px] select-none will-change-transform min-[1025px]:block"
         style={{ transform: `translate3d(0, ${DESKTOP_INITIAL.rightY}px, 0)` }}
@@ -216,7 +216,7 @@ export default function MenuShowcase({ content }: MenuShowcaseProps) {
                   <div className="w-full">
                     <div className="mt-2 flex items-center justify-center gap-3 leading-none min-[768px]:max-[1024px]:mt-0 min-[768px]:max-[1024px]:justify-center min-[1025px]:justify-center">
                       <img
-                        src="/images/云-红字.svg"
+                        src="/images/home/decorative/cloud-red-text.svg"
                         alt=""
                         aria-hidden="true"
                         className="h-6 w-6 shrink-0 translate-y-[3px] select-none"
@@ -224,7 +224,7 @@ export default function MenuShowcase({ content }: MenuShowcaseProps) {
                       />
                       <h3 className="type-menu-category-title !text-[var(--color-red)] !leading-none">{item.title}</h3>
                       <img
-                        src="/images/云-红字.svg"
+                        src="/images/home/decorative/cloud-red-text.svg"
                         alt=""
                         aria-hidden="true"
                         className="h-6 w-6 shrink-0 translate-y-[3px] select-none"

@@ -78,7 +78,7 @@ export default function AboutIntro({ content }: AboutIntroProps) {
         </p>
 
         <img
-          src="/images/aboutintro-title.png"
+          src="/images/home/about-intro/aboutintro-title.png"
           alt={content.titleImageAlt}
           className="mt-9 w-full max-w-[430px] origin-center -rotate-[5deg] select-none min-[1025px]:origin-left min-[1025px]:translate-x-1"
           draggable={false}
@@ -91,7 +91,7 @@ export default function AboutIntro({ content }: AboutIntroProps) {
 
       <img
         ref={desktopCloudRef}
-        src="/images/云.svg"
+        src="/images/home/decorative/cloud.svg"
         alt=""
         aria-hidden="true"
         className={`pointer-events-none absolute left-[calc(50%+115px)] top-[105px] z-30 hidden h-[286px] w-[434px] -translate-x-1/2 select-none object-contain transition-opacity duration-700 ease-in-out min-[1025px]:block ${
@@ -102,7 +102,7 @@ export default function AboutIntro({ content }: AboutIntroProps) {
 
       <div className="relative h-[300px] overflow-hidden bg-black min-[768px]:h-[488px] min-[1025px]:h-auto min-[1025px]:min-h-[560px]">
         <img
-          src="/images/骨汤.webp"
+          src="/images/home/about-intro/bone-soup.webp"
           alt={content.boneSoupImageAlt}
           className="h-full w-full object-cover object-center"
           draggable={false}
@@ -111,7 +111,7 @@ export default function AboutIntro({ content }: AboutIntroProps) {
 
         <img
           ref={mobileCloudRef}
-          src="/images/云.svg"
+          src="/images/home/decorative/cloud.svg"
           alt=""
           aria-hidden="true"
           className={`pointer-events-none absolute left-[-64px] top-[130px] z-20 hidden w-[235px] select-none transition-opacity duration-700 ease-in-out min-[768px]:block min-[1025px]:hidden ${

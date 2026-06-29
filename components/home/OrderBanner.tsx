@@ -36,7 +36,7 @@ export default function OrderBanner({ content }: OrderBannerProps) {
   return (
     <section className="relative min-h-[460px] overflow-hidden bg-black text-white min-[1025px]:min-h-[500px]">
       <img
-        src="/images/orderbanner.png"
+        src="/images/home/order-banner/orderbanner.png"
         alt={content.imageAlt}
         className="absolute inset-0 h-full w-full object-cover object-center"
         draggable={false}

@@ -7,24 +7,24 @@ const AUTO_PLAY_INTERVAL = 4500;
 
 const SLIDE_IMAGES = [
   {
-    desktop: "/images/hero-sliders/desktop/slider-1.jpg",
-    mobile: "/images/hero-sliders/mobile/slider-1.jpg",
+    desktop: "/images/home/hero-sliders/desktop/slider-1.jpg",
+    mobile: "/images/home/hero-sliders/mobile/slider-1.jpg",
   },
   {
-    desktop: "/images/hero-sliders/desktop/slider-2.jpg",
-    mobile: "/images/hero-sliders/mobile/slider-2.jpg",
+    desktop: "/images/home/hero-sliders/desktop/slider-2.jpg",
+    mobile: "/images/home/hero-sliders/mobile/slider-2.jpg",
   },
   {
-    desktop: "/images/hero-sliders/desktop/slider-3.jpg",
-    mobile: "/images/hero-sliders/mobile/slider-3.jpg",
+    desktop: "/images/home/hero-sliders/desktop/slider-3.jpg",
+    mobile: "/images/home/hero-sliders/mobile/slider-3.jpg",
   },
   {
-    desktop: "/images/hero-sliders/desktop/slider-4.jpg",
-    mobile: "/images/hero-sliders/mobile/slider-4.jpg",
+    desktop: "/images/home/hero-sliders/desktop/slider-4.jpg",
+    mobile: "/images/home/hero-sliders/mobile/slider-4.jpg",
   },
   {
-    desktop: "/images/hero-sliders/desktop/slider-5.jpg",
-    mobile: "/images/hero-sliders/mobile/slider-5.jpg",
+    desktop: "/images/home/hero-sliders/desktop/slider-5.jpg",
+    mobile: "/images/home/hero-sliders/mobile/slider-5.jpg",
   },
 ];
 

@@ -2,16 +2,16 @@ import type { SiteContent } from "@/data/siteContent";
 
 const FEATURE_IMAGES = [
   {
-    image: "/images/featurecard/fc1-1.png",
-    icon: "/images/featurecard/fc1-2.png",
+    image: "/images/home/feature-cards/fc1-1.png",
+    icon: "/images/home/feature-cards/fc1-2.png",
   },
   {
-    image: "/images/featurecard/fc2-1.png",
-    icon: "/images/featurecard/fc2-2.png",
+    image: "/images/home/feature-cards/fc2-1.png",
+    icon: "/images/home/feature-cards/fc2-2.png",
   },
   {
-    image: "/images/featurecard/fc3-1.png",
-    icon: "/images/featurecard/fc3-2.png",
+    image: "/images/home/feature-cards/fc3-1.png",
+    icon: "/images/home/feature-cards/fc3-2.png",
   },
 ];
 
@@ -27,7 +27,7 @@ export default function FeatureCards({ content }: FeatureCardsProps) {
         className="absolute inset-0 bg-center bg-no-repeat"
         style={{
           backgroundImage:
-            'url("/images/featurecard/featurecard-background.png")',
+            'url("/images/home/feature-cards/featurecard-background.png")',
           backgroundSize: "cover",
         }}
       />
