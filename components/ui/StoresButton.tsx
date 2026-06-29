@@ -2,12 +2,18 @@ import Link from "next/link";
 
 type StoresButtonProps = {
   className?: string;
+  href: string;
+  label: string;
 };
 
-export default function StoresButton({ className = "" }: StoresButtonProps) {
+export default function StoresButton({
+  className = "",
+  href,
+  label,
+}: StoresButtonProps) {
   return (
     <Link
-      href="/stores"
+      href={href}
       className={`group relative block h-[50px] min-w-[220px] bg-[var(--color-red)] transition-colors duration-300 hover:bg-white ${className}`}
       style={{ fontFamily: "var(--font-display)" }}
     >
@@ -22,7 +28,7 @@ export default function StoresButton({ className = "" }: StoresButtonProps) {
       />
 
       <div className="absolute inset-[10px] z-20 flex items-center justify-center bg-white text-[20px] font-normal leading-none text-[var(--color-red)] min-[768px]:text-[26px]">
-        查看附近门店
+        {label}
       </div>
 
       <svg

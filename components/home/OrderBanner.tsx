@@ -1,9 +1,14 @@
 "use client";
 
-import BrandButton from "@/components/BrandButton";
+import BrandButton from "@/components/ui/BrandButton";
+import type { SiteContent } from "@/data/siteContent";
 import { useEffect, useRef, useState } from "react";
 
-export default function OrderBanner() {
+type OrderBannerProps = {
+  content: SiteContent["home"]["orderBanner"];
+};
+
+export default function OrderBanner({ content }: OrderBannerProps) {
   const [isHeadingVisible, setIsHeadingVisible] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -32,7 +37,7 @@ export default function OrderBanner() {
     <section className="relative min-h-[460px] overflow-hidden bg-black text-white min-[1025px]:min-h-[500px]">
       <img
         src="/images/orderbanner.png"
-        alt="云尚米线热汤与米线"
+        alt={content.imageAlt}
         className="absolute inset-0 h-full w-full object-cover object-center"
         draggable={false}
       />
@@ -46,13 +51,13 @@ export default function OrderBanner() {
             isHeadingVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          <span className="block">累了别开火,来碗热乎的!</span>
-          <span className="mt-3 block min-[1025px]:mt-[20px]">价格实惠,份量实在</span>
+          <span className="block">{content.headingLines[0]}</span>
+          <span className="mt-3 block min-[1025px]:mt-[20px]">{content.headingLines[1]}</span>
         </h2>
 
         <div className="mt-10 flex flex-col items-center gap-5 min-[768px]:flex-row min-[768px]:gap-[120px]">
-          <BrandButton href="/order">自取外卖</BrandButton>
-          <BrandButton href="/order">送餐到家</BrandButton>
+          <BrandButton href={content.orderButtonHref}>{content.pickupButton}</BrandButton>
+          <BrandButton href={content.orderButtonHref}>{content.deliveryButton}</BrandButton>
         </div>
       </div>
     </section>

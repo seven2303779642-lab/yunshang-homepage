@@ -1,50 +1,54 @@
 "use client";
 
-import BrandButton from "@/components/BrandButton";
+import BrandButton from "@/components/ui/BrandButton";
+import {
+  enContent,
+  getLanguageFromPathname,
+  zhContent,
+} from "@/data/siteContent";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-type Language = "zh" | "en";
-
-const navItems = [
-  { href: "/", zh: "首页", en: "Home" },
-  { href: "/about", zh: "关于", en: "About" },
-  { href: "/menu", zh: "菜单", en: "Menu" },
-  { href: "/stores", zh: "门店", en: "Stores" },
-  { href: "/events", zh: "活动", en: "Events" },
+const NAV_ITEM_CONFIG = [
+  { key: "home", zhHref: "/", enHref: "/en", labelKey: "home" as const },
+  { key: "about", zhHref: "/about", enHref: "/en/about", labelKey: "about" as const },
+  { key: "menu", zhHref: "/menu", enHref: "/en/menu", labelKey: "menu" as const },
+  { key: "stores", zhHref: "/stores", enHref: "/en/stores", labelKey: "stores" as const },
+  { key: "events", zhHref: "/events", enHref: "/en/events", labelKey: "events" as const },
 ];
-
-const copy = {
-  zh: {
-    language: "English",
-    order: "线上点单",
-  },
-  en: {
-    language: "中文",
-    order: "Order Online",
-  },
-};
 
 function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
+function isNavItemActive(
+  pathname: string,
+  zhHref: string,
+  enHref: string,
+  language: "zh" | "en",
+) {
+  const href = language === "en" ? enHref : zhHref;
+
+  if (href === "/" || href === "/en") {
+    return pathname === href;
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export default function Navbar() {
   const pathname = usePathname();
-  const [language, setLanguage] = useState<Language>("zh");
+  const language = getLanguageFromPathname(pathname);
+  const content = language === "en" ? enContent : zhContent;
+  const nav = content.nav;
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const savedLanguage = window.localStorage.getItem("language");
-
-    if (savedLanguage === "zh" || savedLanguage === "en") {
-      setLanguage(savedLanguage);
-      document.documentElement.lang = savedLanguage === "zh" ? "zh-CN" : "en";
-      document.documentElement.dataset.lang = savedLanguage;
-    }
-  }, []);
+    document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
+    document.documentElement.dataset.lang = language;
+  }, [language]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -53,8 +57,6 @@ export default function Navbar() {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
-
-  const currentCopy = copy[language];
 
   const navBaseClass = useMemo(
     () =>
@@ -84,29 +86,6 @@ export default function Navbar() {
     );
   }
 
-  function isActive(href: string) {
-    if (href === "/") {
-      return pathname === "/";
-    }
-
-    return pathname === href || pathname.startsWith(`${href}/`);
-  }
-
-  function handleLanguageToggle() {
-    const nextLanguage: Language = language === "zh" ? "en" : "zh";
-
-    setLanguage(nextLanguage);
-    window.localStorage.setItem("language", nextLanguage);
-    document.documentElement.lang = nextLanguage === "zh" ? "zh-CN" : "en";
-    document.documentElement.dataset.lang = nextLanguage;
-
-    window.dispatchEvent(
-      new CustomEvent("languagechange", {
-        detail: { language: nextLanguage },
-      }),
-    );
-  }
-
   function handleMobileLinkClick() {
     setMenuOpen(false);
   }
@@ -115,14 +94,14 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 w-full bg-[var(--color-red)]">
       <div className="mx-auto flex min-h-[76px] w-full max-w-[1440px] items-center justify-between px-5 min-[1025px]:min-h-[100px] min-[1025px]:px-10">
         <Link
-          href="/"
+          href={nav.homeHref}
           className="flex items-center"
-          aria-label="Go to home page"
+          aria-label={nav.homeAriaLabel}
           onClick={() => setMenuOpen(false)}
         >
           <Image
             src="/images/logos/云尚-1.png"
-            alt="Yunshang Rice Noodle"
+            alt={nav.logoAlt}
             width={260}
             height={80}
             priority
@@ -132,35 +111,40 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-[54px] text-white min-[1025px]:flex">
           <div className="grid grid-flow-col auto-cols-max items-center gap-7">
-            {navItems.map((item) => {
-              const active = isActive(item.href);
+            {NAV_ITEM_CONFIG.map((item) => {
+              const href = language === "en" ? item.enHref : item.zhHref;
+              const active = isNavItemActive(
+                pathname,
+                item.zhHref,
+                item.enHref,
+                language,
+              );
 
               return (
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  key={item.key}
+                  href={href}
                   className={getNavItemClass(active)}
                   style={active ? { color: "var(--color-red)" } : undefined}
                   aria-current={active ? "page" : undefined}
                 >
-                  {item[language]}
+                  {nav[item.labelKey]}
                 </Link>
               );
             })}
 
-            <button
-              type="button"
-              onClick={handleLanguageToggle}
+            <Link
+              href={nav.languageHref}
               className={getNavItemClass(false)}
-              aria-label="Toggle language"
+              aria-label={nav.languageSwitchAriaLabel}
             >
-              {currentCopy.language}
-            </button>
+              {nav.languageSwitch}
+            </Link>
           </div>
 
           <div className="flex items-center">
-            <BrandButton href="/order" variant="navbar">
-              {currentCopy.order}
+            <BrandButton href={nav.orderHref} variant="navbar">
+              {nav.orderOnline}
             </BrandButton>
           </div>
         </div>
@@ -169,7 +153,7 @@ export default function Navbar() {
           type="button"
           onClick={() => setMenuOpen((open) => !open)}
           className="flex h-11 w-11 items-center justify-center text-white min-[1025px]:hidden"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-label={menuOpen ? nav.mobileMenuCloseLabel : nav.mobileMenuOpenLabel}
           aria-expanded={menuOpen}
         >
           <span className="relative block h-5 w-6">
@@ -203,39 +187,45 @@ export default function Navbar() {
         )}
       >
         <div className="flex flex-col items-center gap-6 px-8 pt-16 text-white">
-          {navItems.map((item) => {
-            const active = isActive(item.href);
+          {NAV_ITEM_CONFIG.map((item) => {
+            const href = language === "en" ? item.enHref : item.zhHref;
+            const active = isNavItemActive(
+              pathname,
+              item.zhHref,
+              item.enHref,
+              language,
+            );
 
             return (
               <Link
-                key={item.href}
-                href={item.href}
+                key={item.key}
+                href={href}
                 onClick={handleMobileLinkClick}
                 className={getMobileNavItemClass(active)}
                 style={active ? { color: "var(--color-red)" } : undefined}
                 aria-current={active ? "page" : undefined}
               >
-                {item[language]}
+                {nav[item.labelKey]}
               </Link>
             );
           })}
 
-          <button
-            type="button"
-            onClick={handleLanguageToggle}
+          <Link
+            href={nav.languageHref}
+            onClick={handleMobileLinkClick}
             className={getMobileNavItemClass(false)}
-            aria-label="Toggle language"
+            aria-label={nav.languageSwitchAriaLabel}
           >
-            {currentCopy.language}
-          </button>
+            {nav.languageSwitch}
+          </Link>
 
           <BrandButton
-            href="/order"
+            href={nav.orderHref}
             variant="navbar"
             className="mt-2"
             onClick={() => setMenuOpen(false)}
           >
-            {currentCopy.order}
+            {nav.orderOnline}
           </BrandButton>
         </div>
       </div>

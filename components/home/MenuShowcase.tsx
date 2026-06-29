@@ -1,29 +1,23 @@
 "use client";
 
-import BrandButton from "@/components/BrandButton";
+import BrandButton from "@/components/ui/BrandButton";
+import type { SiteContent } from "@/data/siteContent";
 import { useEffect, useRef } from "react";
 
-const menus = [
+const MENU_IMAGES = [
   {
     tag: "/images/menushowcase/经典.png",
     image: "/images/menushowcase/过桥米线.png",
-    title: "过桥米线",
-    text: "源自云南的非物质文化遗产，凭借“一汤锁鲜”的匠心智慧传承百年。云尚过桥米线提供多种汤底口味选择，并搭配12款精美配菜。食材与滚烫高汤分开出品，食用时按“先荤后素”依次烫熟，最后加入爽滑米线，滚烫高汤瞬间激发食材本味，鲜香扑鼻！",
   },
   {
     tag: "/images/menushowcase/人气.png",
     image: "/images/menushowcase/特色米线.png",
-    title: "特色米线",
-    text: "除了经典过桥米线，我们还将传统骨汤米线与独特风味完美融合，打造惊喜满满的特色米线系列！酸辣开胃的老坛酸菜鱼米线、甘香爽口的番茄肥牛米线、麻辣过瘾的川香爆肠旺米线……每一款都让人一口接一口，停不下来！还能自由搭配配菜，想怎么吃就怎么吃，打造你的专属米线体验！",
   },
   {
     tag: "/images/menushowcase/必点.png",
     image: "/images/menushowcase/凉菜小吃.png",
-    title: "凉菜小吃",
-    text: "云尚米线菜品丰富，除了经典米线，还有各式精美凉菜、小吃和甜品。香辣开胃的口水鸡、酸甜爽脆的土豆丝、每桌必点的夫妻肺片，款款都是开胃神器！还有盐酥鸡、奥尔良鸡翅、蒜泥炸豆腐等特色小吃，香酥可口，一口接一口，停不下来！",
   },
 ];
-
 
 type MotionTransforms = {
   backgroundX: number;
@@ -90,7 +84,11 @@ function getMotionTransforms(
   };
 }
 
-export default function MenuShowcase() {
+type MenuShowcaseProps = {
+  content: SiteContent["home"]["menuShowcase"];
+};
+
+export default function MenuShowcase({ content }: MenuShowcaseProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const backgroundRef = useRef<HTMLImageElement | null>(null);
   const leftLabelRef = useRef<HTMLImageElement | null>(null);
@@ -162,7 +160,7 @@ export default function MenuShowcase() {
       <img
         ref={leftLabelRef}
         src="/images/menushowcase/一碗好米线.png"
-        alt="一碗好米线"
+        alt={content.leftLabelAlt}
         className="pointer-events-none absolute left-7 top-28 z-10 hidden w-[116px] select-none will-change-transform min-[1025px]:block"
         style={{ transform: `translate3d(0, ${DESKTOP_INITIAL.leftY}px, 0)` }}
         draggable={false}
@@ -171,7 +169,7 @@ export default function MenuShowcase() {
       <img
         ref={rightLabelRef}
         src="/images/menushowcase/半碗都是料.png"
-        alt="半碗都是料"
+        alt={content.rightLabelAlt}
         className="pointer-events-none absolute right-7 top-28 z-10 hidden w-[116px] select-none will-change-transform min-[1025px]:block"
         style={{ transform: `translate3d(0, ${DESKTOP_INITIAL.rightY}px, 0)` }}
         draggable={false}
@@ -179,7 +177,7 @@ export default function MenuShowcase() {
 
       <div className="relative z-20 mx-auto max-w-[1180px]">
         <div className="grid grid-cols-1 gap-14 min-[768px]:max-[1024px]:flex min-[768px]:max-[1024px]:flex-col min-[768px]:max-[1024px]:gap-16 min-[1025px]:grid min-[1025px]:grid-cols-3 min-[1025px]:gap-16">
-          {menus.map((item, index) => (
+          {content.items.map((item, index) => (
             <article
               key={item.title}
               className={`text-center min-[768px]:max-[1024px]:flex min-[768px]:max-[1024px]:items-stretch min-[768px]:max-[1024px]:gap-10 min-[768px]:max-[1024px]:text-center ${
@@ -191,7 +189,7 @@ export default function MenuShowcase() {
               <div className="relative mx-auto w-full max-w-[360px] shrink-0 overflow-visible min-[768px]:max-[1024px]:mx-0 min-[768px]:max-[1024px]:w-[46%] min-[768px]:max-[1024px]:max-w-[400px] min-[1025px]:mx-auto min-[1025px]:w-auto">
                 <div className="aspect-[304/390] w-full overflow-hidden">
                   <img
-                    src={item.image}
+                    src={MENU_IMAGES[index].image}
                     alt={item.title}
                     className="h-full w-full object-cover"
                     draggable={false}
@@ -199,7 +197,7 @@ export default function MenuShowcase() {
                 </div>
 
                 <img
-                  src={item.tag}
+                  src={MENU_IMAGES[index].tag}
                   alt=""
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-10 -top-12 w-[136px] rotate-[-8deg] select-none min-[1025px]:w-[146px]"
@@ -210,7 +208,7 @@ export default function MenuShowcase() {
               <div className="relative min-[768px]:max-[1024px]:min-h-0 min-[768px]:max-[1024px]:flex-1 min-[768px]:max-[1024px]:self-stretch">
                 <div
                   className={`min-[768px]:max-[1024px]:absolute min-[768px]:max-[1024px]:inset-x-0 min-[768px]:max-[1024px]:top-0 min-[768px]:max-[1024px]:flex min-[768px]:max-[1024px]:items-center ${
-                    index === menus.length - 1
+                    index === content.items.length - 1
                       ? "min-[768px]:max-[1024px]:bottom-[62px]"
                       : "min-[768px]:max-[1024px]:bottom-0"
                   }`}
@@ -240,9 +238,9 @@ export default function MenuShowcase() {
                   </div>
                 </div>
 
-                {index === menus.length - 1 && (
+                {index === content.items.length - 1 && (
                   <div className="mt-8 hidden min-[768px]:max-[1024px]:absolute min-[768px]:max-[1024px]:bottom-0 min-[768px]:max-[1024px]:left-0 min-[768px]:max-[1024px]:mt-0 min-[768px]:max-[1024px]:block">
-                    <BrandButton href="/menu">查看菜单</BrandButton>
+                    <BrandButton href={content.viewMenuHref}>{content.viewMenuButton}</BrandButton>
                   </div>
                 )}
               </div>
@@ -251,7 +249,7 @@ export default function MenuShowcase() {
         </div>
 
         <div className="mt-14 flex justify-center min-[768px]:max-[1024px]:hidden">
-          <BrandButton href="/menu">查看菜单</BrandButton>
+          <BrandButton href={content.viewMenuHref}>{content.viewMenuButton}</BrandButton>
         </div>
       </div>
     </section>

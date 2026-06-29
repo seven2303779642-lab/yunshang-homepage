@@ -9,7 +9,12 @@
   - Updated typography, reusable button styling, responsive behavior, mobile layout fixes, spacing, image positioning, and section-level visual details.
   - Remaining issues: a few minor visual polish items and English-version asset/link issues.
 - 修复了一些小视觉问题。: 1 hour
-
+- 目录结构整理与轻量级多语言改造: 1 hour
+  - 完成目录结构整理（`components/home`、`components/layout`、`components/ui`、`data/siteContent.ts`）。
+  - 补齐中英文页面路由骨架（中文默认路径 + 英文 `/en` 前缀）。
+  - 接入轻量级多语言文案数据层（`zhContent` / `enContent`），首页 section 从 content 读取文案。
+  - Navbar / Footer 支持中英文路径与文案切换，占位页同步接入。
+  - 首页视觉效果、布局、动画与业务逻辑保持不变；`npm run build` 全部页面通过。
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 

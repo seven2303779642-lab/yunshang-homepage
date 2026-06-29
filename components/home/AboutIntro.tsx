@@ -1,12 +1,17 @@
 "use client";
 
-import BrandButton from "@/components/BrandButton";
+import BrandButton from "@/components/ui/BrandButton";
+import type { SiteContent } from "@/data/siteContent";
 import { useEffect, useRef, useState } from "react";
 
 const VIDEO_EMBED_URL =
   "https://www.youtube.com/embed/H_a0OlznLLs?autoplay=1&rel=0&modestbranding=1";
 
-export default function AboutIntro() {
+type AboutIntroProps = {
+  content: SiteContent["home"]["aboutIntro"];
+};
+
+export default function AboutIntro({ content }: AboutIntroProps) {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [isDesktopCloudVisible, setIsDesktopCloudVisible] = useState(false);
   const [isMobileCloudVisible, setIsMobileCloudVisible] = useState(false);
@@ -63,28 +68,24 @@ export default function AboutIntro() {
     <section className="relative grid overflow-hidden bg-[var(--color-red)] text-white min-[1025px]:min-h-[560px] min-[1025px]:grid-cols-2">
       <div className="relative z-20 flex flex-col items-center justify-center px-[15px] py-[60px] text-center min-[768px]:px-[50px] min-[768px]:py-[68px] min-[1025px]:items-start min-[1025px]:justify-start min-[1025px]:p-[100px] min-[1025px]:text-left">
         <h2 className="type-display-title !text-white">
-          一碗有温度的米线，
+          {content.headingLines[0]}
           <br />
-          从匠心开始
+          {content.headingLines[1]}
         </h2>
 
         <p className="type-body-copy mt-[20px] max-w-[920px] text-white min-[1025px]:max-w-[476px]">
-          云尚米线，传承云南百年米线文化，以滚烫鲜骨浓汤激发食材本味，
-          醇厚鲜香，一口暖心！严选央企华润五丰米线，100%纯大米研磨，
-          0胶添加，爽滑Q弹，吸汁入味。高汤精选优质鲜骨，慢熬12小时以上，
-          浓郁纯正，无添加更安心。搭配本地新鲜食材，锁住天然美味。
-          每一碗都是实打实的真材实料，肉足菜丰，汤鲜味美，满足感拉满！
+          {content.body}
         </p>
 
         <img
           src="/images/aboutintro-title.png"
-          alt="不想做饭？来碗云尚米线！"
+          alt={content.titleImageAlt}
           className="mt-9 w-full max-w-[430px] origin-center -rotate-[5deg] select-none min-[1025px]:origin-left min-[1025px]:translate-x-1"
           draggable={false}
         />
 
-        <BrandButton href="/about" className="mt-12 w-fit">
-          关于云尚
+        <BrandButton href={content.aboutButtonHref} className="mt-12 w-fit">
+          {content.aboutButton}
         </BrandButton>
       </div>
 
@@ -102,7 +103,7 @@ export default function AboutIntro() {
       <div className="relative h-[300px] overflow-hidden bg-black min-[768px]:h-[488px] min-[1025px]:h-auto min-[1025px]:min-h-[560px]">
         <img
           src="/images/骨汤.webp"
-          alt="云尚米线骨汤熬制画面"
+          alt={content.boneSoupImageAlt}
           className="h-full w-full object-cover object-center"
           draggable={false}
         />
@@ -121,7 +122,7 @@ export default function AboutIntro() {
 
         <button
           type="button"
-          aria-label="播放云尚米线介绍视频"
+          aria-label={content.playVideoAriaLabel}
           onClick={() => setIsVideoOpen(true)}
           className="group absolute left-1/2 top-1/2 z-30 flex h-[50px] w-[50px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[3px] border-white text-white transition-colors duration-300 hover:border-[var(--color-red)] hover:text-[var(--color-red)]"
         >
@@ -139,13 +140,13 @@ export default function AboutIntro() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="云尚米线介绍视频播放窗口"
+          aria-label={content.videoDialogAriaLabel}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4"
           onClick={() => setIsVideoOpen(false)}
         >
           <button
             type="button"
-            aria-label="关闭视频"
+            aria-label={content.closeVideoAriaLabel}
             onClick={() => setIsVideoOpen(false)}
             className="absolute right-5 top-4 z-[110] text-5xl leading-none text-white transition-colors duration-300 hover:text-[var(--color-red)]"
           >
@@ -158,7 +159,7 @@ export default function AboutIntro() {
           >
             <div className="aspect-video w-full">
               <iframe
-                title="云尚米线介绍视频"
+                title={content.videoTitle}
                 src={VIDEO_EMBED_URL}
                 className="h-full w-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

@@ -1,31 +1,25 @@
+"use client";
+
+import {
+  enContent,
+  getLanguageFromPathname,
+  zhContent,
+} from "@/data/siteContent";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const footerLinksLeft = [
-  { href: "/about", label: "关于云尚" },
-  { href: "/events", label: "活动" },
-];
-
-const footerLinksRight = [
-  { href: "/stores", label: "门店" },
-  { href: "/menu", label: "菜单" },
-  { href: "/order", label: "线上点单" },
-];
-
-const socialLinks = [
+const SOCIAL_ICONS = [
   {
     href: "#",
-    label: "Facebook",
     icon: "/images/logos/facebook.svg",
   },
   {
     href: "#",
-    label: "Instagram",
     icon: "/images/logos/ins.svg",
   },
   {
     href: "#",
-    label: "Redbook",
     icon: "/images/logos/redbook.svg",
   },
 ];
@@ -72,6 +66,10 @@ function FooterLinkColumn({
 }
 
 export default function Footer() {
+  const pathname = usePathname();
+  const language = getLanguageFromPathname(pathname);
+  const footer = language === "en" ? enContent.footer : zhContent.footer;
+
   return (
     <footer className="relative overflow-visible bg-[var(--color-red)]">
       {/* Floating top decoration: sits above footer and covers the previous section */}
@@ -107,10 +105,10 @@ export default function Footer() {
 
         <div className="relative z-10 mx-auto flex max-w-[1200px] items-start justify-between gap-16 max-[767px]:flex-col max-[767px]:items-center max-[767px]:justify-start max-[767px]:gap-9">
           <div className="flex w-[170px] flex-col items-center max-[767px]:w-[170px] max-[767px]:flex-col-reverse max-[767px]:gap-7">
-            <Link href="/" aria-label="Go to home page">
+            <Link href={footer.homeHref} aria-label={footer.homeAriaLabel}>
               <Image
                 src="/images/logos/云尚-2.png"
-                alt="Yunshang Rice Noodle"
+                alt={footer.logoAlt}
                 width={260}
                 height={120}
                 className="h-auto w-full max-w-[170px]"
@@ -118,10 +116,14 @@ export default function Footer() {
             </Link>
 
             <div className="mt-6 flex w-full items-center justify-between max-[767px]:mt-0 max-[767px]:w-[170px]">
-              {socialLinks.map((item) => (
-                <Link key={item.label} href={item.href} aria-label={item.label}>
+              {footer.social.map((item, index) => (
+                <Link
+                  key={item.label}
+                  href={SOCIAL_ICONS[index].href}
+                  aria-label={item.ariaLabel}
+                >
                   <Image
-                    src={item.icon}
+                    src={SOCIAL_ICONS[index].icon}
                     alt=""
                     width={28}
                     height={28}
@@ -134,15 +136,17 @@ export default function Footer() {
           </div>
 
           <div className="flex items-start justify-center gap-24 max-[767px]:w-full max-[767px]:gap-20">
-            <FooterLinkColumn links={footerLinksLeft} />
-            <FooterLinkColumn links={footerLinksRight} />
+            <FooterLinkColumn links={footer.linksLeft} />
+            <FooterLinkColumn links={footer.linksRight} />
           </div>
 
           <div className="flex flex-col items-center">
-            <div className="type-footer-support mb-4 text-white">微信小客服</div>
+            <div className="type-footer-support mb-4 text-white">
+              {footer.wechatSupport}
+            </div>
             <Image
               src="/images/footer/service-barcode.png"
-              alt="WeChat customer service QR code"
+              alt={footer.wechatQrAlt}
               width={140}
               height={140}
               className="h-[120px] w-[120px]"
@@ -162,8 +166,8 @@ export default function Footer() {
         />
 
         <p className="type-footer-copyright w-[706px] max-w-full text-center text-[var(--color-red)]">
-          <span>© 2023 YUNSHANG RICE NOODLE.</span>
-          <span className="max-[767px]:block"> ALL RIGHTS RESERVED.</span>
+          <span>{footer.copyright}</span>
+          <span className="max-[767px]:block">{footer.copyrightMobile}</span>
         </p>
 
         <Image
