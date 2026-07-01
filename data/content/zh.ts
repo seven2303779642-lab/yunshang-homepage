@@ -1,4 +1,5 @@
 import type { SiteContent } from "./types";
+import { ORDER_DELIVERY_URL, ORDER_PICKUP_URL } from "../orderLinks";
 
 export const zhContent: SiteContent = {
   locale: "zh",
@@ -15,9 +16,8 @@ export const zhContent: SiteContent = {
     mobileMenuCloseLabel: "关闭菜单",
     homeAriaLabel: "返回首页",
     languageSwitchAriaLabel: "切换语言",
-    homeHref: "/",
+    homeHref: "/home",
     languageHref: "/en",
-    orderHref: "/order",
   },
   home: {
     heroSlider: {
@@ -150,7 +150,8 @@ export const zhContent: SiteContent = {
       headingLines: ["累了别开火,来碗热乎的!", "价格实惠,份量实在"],
       pickupButton: "自取外卖",
       deliveryButton: "送餐到家",
-      orderButtonHref: "/order",
+      pickupButtonHref: ORDER_PICKUP_URL,
+      deliveryButtonHref: ORDER_DELIVERY_URL,
     },
   },
   about: {
@@ -504,7 +505,7 @@ export const zhContent: SiteContent = {
   footer: {
     logoAlt: "云尚米线",
     homeAriaLabel: "返回首页",
-    homeHref: "/",
+    homeHref: "/home",
     linksLeft: [
       { label: "关于云尚", href: "/about" },
       { label: "活动", href: "/events" },
@@ -512,7 +513,7 @@ export const zhContent: SiteContent = {
     linksRight: [
       { label: "门店", href: "/locations" },
       { label: "菜单", href: "/menu" },
-      { label: "线上点单", href: "/order" },
+      { label: "线上点单", href: "/order", opensOrderPopup: true },
     ],
     social: [
       { label: "Facebook", ariaLabel: "Facebook" },
@@ -523,6 +524,12 @@ export const zhContent: SiteContent = {
     wechatQrAlt: "微信客服二维码",
     copyright: "© 2023 YUNSHANG RICE NOODLE.",
     copyrightMobile: " ALL RIGHTS RESERVED.",
+  },
+  orderPopup: {
+    title: "线上点单",
+    closeAriaLabel: "关闭线上点单窗口",
+    pickupButton: "到店自取",
+    deliveryButton: "外卖送餐",
   },
   placeholderPages: {
     comingSoon: "页面建设中，敬请期待。",

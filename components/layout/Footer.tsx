@@ -1,5 +1,6 @@
 "use client";
 
+import { useOrderPopup } from "@/components/order/OrderPopupContext";
 import {
   enContent,
   getLanguageFromPathname,
@@ -24,19 +25,33 @@ const SOCIAL_ICONS = [
   },
 ];
 
-function FooterLink({ href, label }: { href: string; label: string }) {
+function FooterLink({
+  href,
+  label,
+  opensOrderPopup = false,
+}: {
+  href: string;
+  label: string;
+  opensOrderPopup?: boolean;
+}) {
+  const { openOrderPopup } = useOrderPopup();
+  const sharedClassName =
+    "type-footer-link relative isolate px-4 py-1 text-white transition-colors duration-300 before:pointer-events-none before:absolute before:inset-x-[-8px] before:inset-y-[-4px] before:-z-10 before:scale-x-50 before:scale-y-75 before:bg-white before:opacity-0 before:transition-all before:duration-300 before:ease-out hover:text-[var(--color-red)] hover:before:scale-x-100 hover:before:scale-y-100 hover:before:opacity-100";
+
+  if (opensOrderPopup) {
+    return (
+      <button
+        type="button"
+        className={`${sharedClassName} cursor-pointer border-0 bg-transparent`}
+        onClick={openOrderPopup}
+      >
+        {label}
+      </button>
+    );
+  }
+
   return (
-    <Link
-      href={href}
-      className="
-        type-footer-link relative isolate px-4 py-1 text-white
-        transition-colors duration-300
-        before:pointer-events-none before:absolute before:inset-x-[-8px] before:inset-y-[-4px]
-        before:-z-10 before:scale-x-50 before:scale-y-75 before:bg-white before:opacity-0
-        before:transition-all before:duration-300 before:ease-out
-        hover:text-[var(--color-red)] hover:before:scale-x-100 hover:before:scale-y-100 hover:before:opacity-100
-      "
-    >
+    <Link href={href} className={sharedClassName}>
       {label}
     </Link>
   );
@@ -45,7 +60,11 @@ function FooterLink({ href, label }: { href: string; label: string }) {
 function FooterLinkColumn({
   links,
 }: {
-  links: Array<{ href: string; label: string }>;
+  links: Array<{
+    href: string;
+    label: string;
+    opensOrderPopup?: boolean;
+  }>;
 }) {
   return (
     <div className="flex flex-col items-center gap-7">
@@ -59,7 +78,12 @@ function FooterLinkColumn({
       />
 
       {links.map((item) => (
-        <FooterLink key={item.href} href={item.href} label={item.label} />
+        <FooterLink
+          key={`${item.label}-${item.href}`}
+          href={item.href}
+          label={item.label}
+          opensOrderPopup={item.opensOrderPopup}
+        />
       ))}
     </div>
   );

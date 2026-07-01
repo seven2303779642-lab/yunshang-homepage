@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import OrderPopup from "@/components/order/OrderPopup";
+import { OrderPopupProvider } from "@/components/order/OrderPopupContext";
 import "./globals.css";
 import "@fontsource/noto-sans-sc/400.css";
 import "@fontsource/noto-sans-sc/500.css";
@@ -31,7 +33,12 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <OrderPopupProvider>
+          {children}
+          <OrderPopup />
+        </OrderPopupProvider>
+      </body>
     </html>
   );
 }

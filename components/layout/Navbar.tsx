@@ -1,6 +1,7 @@
 "use client";
 
 import BrandButton from "@/components/ui/BrandButton";
+import { useOrderPopup } from "@/components/order/OrderPopupContext";
 import {
   enContent,
   getLanguageFromPathname,
@@ -12,7 +13,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 const NAV_ITEM_CONFIG = [
-  { key: "home", zhHref: "/", enHref: "/en", labelKey: "home" as const },
+  { key: "home", zhHref: "/home", enHref: "/en", labelKey: "home" as const },
   { key: "about", zhHref: "/about", enHref: "/en/about", labelKey: "about" as const },
   { key: "menu", zhHref: "/menu", enHref: "/en/menu", labelKey: "menu" as const },
   { key: "locations", zhHref: "/locations", enHref: "/en/locations", labelKey: "stores" as const },
@@ -31,7 +32,7 @@ function isNavItemActive(
 ) {
   const href = language === "en" ? enHref : zhHref;
 
-  if (href === "/" || href === "/en") {
+  if (href === "/home" || href === "/en") {
     return pathname === href;
   }
 
@@ -43,6 +44,7 @@ export default function Navbar() {
   const language = getLanguageFromPathname(pathname);
   const content = language === "en" ? enContent : zhContent;
   const nav = content.nav;
+  const { openOrderPopup } = useOrderPopup();
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -88,6 +90,11 @@ export default function Navbar() {
 
   function handleMobileLinkClick() {
     setMenuOpen(false);
+  }
+
+  function handleOrderClick() {
+    setMenuOpen(false);
+    openOrderPopup();
   }
 
   return (
@@ -143,7 +150,7 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center">
-            <BrandButton href={nav.orderHref} variant="navbar">
+            <BrandButton variant="navbar" onClick={handleOrderClick}>
               {nav.orderOnline}
             </BrandButton>
           </div>
@@ -220,10 +227,9 @@ export default function Navbar() {
           </Link>
 
           <BrandButton
-            href={nav.orderHref}
             variant="navbar"
             className="mt-2"
-            onClick={() => setMenuOpen(false)}
+            onClick={handleOrderClick}
           >
             {nav.orderOnline}
           </BrandButton>

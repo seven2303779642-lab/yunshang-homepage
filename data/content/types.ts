@@ -19,9 +19,30 @@ export type PlaceholderPageContent = {
   subtitle: string;
 };
 
+export type OrderPopupContent = {
+  title: string;
+  closeAriaLabel: string;
+  pickupButton: string;
+  deliveryButton: string;
+};
+
+export type WelcomeContent = {
+  logoImage: string;
+  logoAlt: string;
+  backgroundImage: string;
+  cloudTopLeft: string;
+  cloudBottomRight: string;
+  whiteIcon: string;
+  chineseButton: string;
+  englishButton: string;
+  chineseHref: string;
+  englishHref: string;
+};
+
 export type FooterLinkContent = {
   label: string;
   href: string;
+  opensOrderPopup?: boolean;
 };
 
 export type FooterSocialContent = {
@@ -44,7 +65,6 @@ export type NavContent = {
   languageSwitchAriaLabel: string;
   homeHref: string;
   languageHref: string;
-  orderHref: string;
 };
 
 export type FooterContent = {
@@ -242,7 +262,8 @@ export type SiteContent = {
       headingLines: [string, string];
       pickupButton: string;
       deliveryButton: string;
-      orderButtonHref: string;
+      pickupButtonHref: string;
+      deliveryButtonHref: string;
     };
   };
   about: AboutContent;
@@ -250,6 +271,7 @@ export type SiteContent = {
   locations: LocationsContent;
   events: EventsContent;
   footer: FooterContent;
+  orderPopup: OrderPopupContent;
   placeholderPages: {
     comingSoon: string;
     about: PlaceholderPageContent;

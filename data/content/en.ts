@@ -1,4 +1,5 @@
 import type { SiteContent } from "./types";
+import { ORDER_DELIVERY_URL, ORDER_PICKUP_URL } from "../orderLinks";
 
 export const enContent: SiteContent = {
   "locale": "en",
@@ -16,8 +17,7 @@ export const enContent: SiteContent = {
     "homeAriaLabel": "Go to home page",
     "languageSwitchAriaLabel": "Switch language",
     "homeHref": "/en",
-    "languageHref": "/",
-    "orderHref": "/en/order"
+    "languageHref": "/home"
   },
   "home": {
     "heroSlider": {
@@ -163,7 +163,8 @@ export const enContent: SiteContent = {
       ],
       "pickupButton": "Pick Up",
       "deliveryButton": "Delivery",
-      "orderButtonHref": "/en/order"
+      "pickupButtonHref": ORDER_PICKUP_URL,
+      "deliveryButtonHref": ORDER_DELIVERY_URL
     }
   },
   "about": {
@@ -562,7 +563,8 @@ export const enContent: SiteContent = {
       },
       {
         "label": "Online Order",
-        "href": "/en/order"
+        "href": "/en/order",
+        "opensOrderPopup": true
       }
     ],
     "social": [
@@ -583,6 +585,12 @@ export const enContent: SiteContent = {
     "wechatQrAlt": "WeChat QR code",
     "copyright": "© 2023 YUNSHANG RICE NOODLE.",
     "copyrightMobile": " ALL RIGHTS RESERVED."
+  },
+  "orderPopup": {
+    "title": "Online Order",
+    "closeAriaLabel": "Close online order dialog",
+    "pickupButton": "Pick Up",
+    "deliveryButton": "Delivery"
   },
   "placeholderPages": {
     "comingSoon": "This page is under construction.",

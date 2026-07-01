@@ -45,7 +45,8 @@
 
 | 页面 | 中文路由 | 英文路由 | 说明 |
 |------|----------|----------|------|
-| 首页 | `/` | `/en` | Hero、AboutIntro、FeatureCards、StoreBanner、MenuShowcase、OrderBanner |
+| 语言入口 | `/` | — | Landing Page（语言选择）；`/welcome` 重定向至 `/` |
+| 首页 | `/home` | `/en` | Hero、AboutIntro、FeatureCards、StoreBanner、MenuShowcase、OrderBanner |
 | 关于 | `/about` | `/en/about` | Hero、Intro、ValueGrid、PopularDishes、Gallery、Stores |
 | 菜单 | `/menu` | `/en/menu` | manifest 驱动，分类 FLIP 筛选动画 |
 | 门店 | `/locations` | `/en/locations` | 原 Stores 已更名；省/区筛选 + 门店卡片 FLIP 动画 |
@@ -63,7 +64,9 @@
 
 **公共与规范**
 
-- Navbar / Footer 中英文切换。
+- Navbar / Footer 中英文切换；「线上点单」打开本地 `OrderPopup`。
+- Landing Page（`/`）与 OrderPopup 接入 Codex 素材。
+- StoreBanner「查看附近门店」使用 PNG 背景按钮（`StoreNearbyButton`）。
 - `AGENTS.md` 开发规范。
 - `npm run build` 已通过。
 
@@ -95,11 +98,13 @@ app/
     page.tsx, about/, menu/, locations/, events/, order/, stores/
 
 components/
-  home/          首页 section（HeroSlider、MenuShowcase 等）
+  home/          首页 section（HeroSlider、MenuShowcase、StoreNearbyButton 等）
+  landing/       Landing Page（LanguageEntryPage、LanguageButton）
   about/         关于页模块
   menu/          菜单 Hero、分类筛选、菜品 grid（useMenuFlip）
   locations/     门店 Hero、筛选、卡片 grid（useLocationsFlip）
   events/        活动 Hero、活动列表
+  order/         OrderPopup、OrderPopupContext
   layout/        Navbar、Footer、PlaceholderPage
   ui/            BrandButton 等通用 UI
   common/        PageBanner 等跨页组件
@@ -107,6 +112,8 @@ components/
 data/
   content/       types.ts, zh.ts, en.ts, index.ts   # 静态多语言文案
   siteContent.ts                                    # 统一 re-export
+  orderLinks.ts, welcomeContent.ts                  # 点单链接、Landing 文案
+  orderPopupAssets.ts, storeNearbyButtonAssets.ts     # 弹窗 / 门店按钮素材路径
   menu.ts, menuManifest.json, menuTranslations.en.json
   locations.ts, locationsManifest.json,
     locationIconManifest.json, locationTranslations.en.json
@@ -118,6 +125,7 @@ docs/
 
 public/images/
   common/ home/ about/ menu/ locations/ events/     # 中文 / 通用素材
+  landing/ order-popup/ buttons/                    # Landing、点单弹窗、门店按钮 PNG
   home/en/ about/en/ events/en/                     # 英文带文字素材
 
 AGENTS.md        AI Agent 开发规范
@@ -219,7 +227,9 @@ npm run dev
 打开浏览器访问：
 
 ```text
-http://localhost:3000
+http://localhost:3000        # Landing（语言入口）
+http://localhost:3000/home   # 中文首页
+http://localhost:3000/en     # 英文首页
 ```
 
 构建检查：
@@ -408,6 +418,40 @@ npm run build
 - 未建立全站 imageManifest。
 - 未清理全部历史图片路径；`storesManifest` 等遗留文件仍可能存在。
 
+### 14. Landing Page、OrderPopup 与 StoreBanner 按钮素材接入
+
+用时：6 小时
+
+**路由与 Landing Page**（工作区尚有未提交改动）：
+
+- `/` 改为语言入口 Landing Page；中文首页迁至 `/home`；`/welcome` 重定向至 `/`。
+- 新增 `components/landing/LanguageEntryPage.tsx`、`LanguageButton.tsx`。
+- 接入 Codex landing 素材：背景、logo、云纹、`white-icon`、语言按钮 PNG（`button-red-white.png` / `button-red-fill.png`）。
+- Landing 响应式精修：云字图标 55 / 40 / 30px；`cloud-deco` 分断点尺寸与桌面左侧裁切；移动端隐藏 `cloud-right`、语言按钮纵向排列；底部云字与 `cloud-right` 位置调整。
+
+**OrderPopup 与点单链接**：
+
+- 新增 `OrderPopup`、`OrderPopupProvider`，挂载于根 `layout.tsx`。
+- Navbar / Footer「线上点单」统一打开本地弹窗；弹窗内按钮使用 `BrandButton`（红底变体）。
+- 点单 URL 集中于 `data/orderLinks.ts`；弹窗「外卖送餐」链接至站内 Landing `/`。
+- 弹窗底部波浪纹：`popup-wave-cn.svg` / `popup-wave-en.svg`。
+
+**StoreBanner 门店按钮**：
+
+- 按 Codex `yunshang-button-assets-report.md`，「查看附近门店」改为 PNG 背景 + HTML 文本（`StoreNearbyButton`）。
+- 素材：`store-nearby-default.png`、`store-nearby-hover.png`；样式见 `store-nearby-button.css`（组件内引入，避免 `globals.css` 未打入 bundle 的问题）。
+- 未改动 Navbar、Landing、OrderPopup 及其他 `BrandButton` 用法。
+
+**content / 导航**：
+
+- `welcomeContent.ts`、`zhContent` / `enContent` 更新 `homeHref`、语言入口链接。
+- `npm run build` 通过。
+
+备注：
+
+- StoreBanner 背景图本轮未替换为 Codex `store-banner-bg.jpg`。
+- `BrandButton` 仍保留 `light` 变体代码，当前无页面使用。
+
 ## 当前累计工时
 
-约 30 小时。
+约 36 小时。

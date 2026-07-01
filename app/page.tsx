@@ -1,6 +1,6 @@
-import HomePage from "@/components/home/HomePage";
-import { zhContent } from "@/data/siteContent";
+import LanguageEntryPage from "@/components/landing/LanguageEntryPage";
+import { welcomeContent } from "@/data/welcomeContent";
 
-export default function Home() {
-  return <HomePage content={zhContent} locale="zh" />;
+export default function LandingPage() {
+  return <LanguageEntryPage content={welcomeContent} />;
 }

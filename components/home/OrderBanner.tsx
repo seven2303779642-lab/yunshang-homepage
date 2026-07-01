@@ -69,8 +69,12 @@ export default function OrderBanner({ content }: OrderBannerProps) {
         </h2>
 
         <div className="mt-10 flex flex-col items-center gap-5 min-[768px]:flex-row min-[768px]:gap-[120px]">
-          <BrandButton href={content.orderButtonHref}>{content.pickupButton}</BrandButton>
-          <BrandButton href={content.orderButtonHref}>{content.deliveryButton}</BrandButton>
+          <BrandButton href={content.pickupButtonHref}>
+            {content.pickupButton}
+          </BrandButton>
+          <BrandButton href={content.deliveryButtonHref}>
+            {content.deliveryButton}
+          </BrandButton>
         </div>
       </div>
     </section>
